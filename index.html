@@ -147,6 +147,7 @@ body.locked{overflow:hidden}
 .thanks p{color:#b5b5b5;font-size:15px;margin-bottom:12px}
 .thanks .req{color:var(--gold);font-weight:800;letter-spacing:1px;font-size:17px}
 .thanks .fine{color:#8d8d8d;font-size:13px;margin-top:16px}
+.tagline{color:var(--gold);font-weight:800;letter-spacing:1px;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -197,8 +198,9 @@ body.locked{overflow:hidden}
   <h2>Deposit Policy<span class="bar"></span></h2>
   <div class="deposit"><div class="deposit-in">
     <h3>$10 Non-Refundable Deposit</h3>
-    <p>Every appointment requires a <span class="warn">$10 NON-REFUNDABLE</span> deposit to be booked.</p>
-    <p>The deposit goes toward your service total. No-shows and same-day cancellations forfeit the deposit.</p>
+    <p>Every appointment requires a <span class="warn">$10 NON-REFUNDABLE</span> deposit. Your time is <b>not confirmed</b> until the deposit is received.</p>
+    <p>Send it on Cash App to <span class="tagline">$banzz86</span>. The deposit goes toward your service total. No-shows and same-day cancellations forfeit the deposit.</p>
+    <a class="cta gold" href="https://cash.app/%24banzz86/10" target="_blank" rel="noopener">Send $10 Deposit on Cash App</a>
   </div></div>
 </div>
 </section>
@@ -207,11 +209,12 @@ body.locked{overflow:hidden}
   <button class="modal-x" id="thanksClose" aria-label="Close">&times;</button>
   <div class="thanks">
     <div class="check">&#10003;</div>
-    <h3>Thank You &mdash; You&rsquo;re Almost Booked</h3>
+    <h3>One Step Left &mdash; Send Your Deposit</h3>
     <p class="req" id="thanksReq"></p>
-    <p>Your request was sent to BanzBlends by text. You&rsquo;ll get a confirmation back shortly.</p>
-    <p class="fine">Your chair is held once the <b>$10 non-refundable deposit</b> is received. No-shows and same-day cancellations forfeit the deposit.</p>
-    <a class="cta" href="sms:+16562048323?&body=Sending%20my%20%2410%20non-refundable%20deposit%20for%20my%20BanzBlends%20appointment.">Send My $10 Deposit</a>
+    <p>Your request was sent by text. <b>Your appointment is not confirmed yet.</b></p>
+    <p class="fine">Send the <b>$10 non-refundable deposit</b> to Cash App <span class="tagline">$banzz86</span> now. Once it lands, you get a confirmation text and the chair is yours. No deposit, no appointment. No-shows and same-day cancellations forfeit the deposit.</p>
+    <a class="cta" href="https://cash.app/%24banzz86/10" target="_blank" rel="noopener">Pay $10 Deposit &mdash; Cash App $banzz86</a>
+    <div class="fine" style="margin-top:14px">Cash App tag: <span class="tagline">$banzz86</span></div>
     <div class="script">Let&rsquo;s Get Right.</div>
   </div>
 </div></div>
@@ -220,7 +223,7 @@ body.locked{overflow:hidden}
 <section id="schedule">
 <div class="wrap">
   <h2>Schedule<span class="bar"></span></h2>
-  <p class="note">Open 7 days, 10:00 AM &ndash; 10:00 PM. Pick a day, then tap the time you want. It opens a text to (656) 204-8323. Your slot is held once the $10 non-refundable deposit is sent.</p>
+  <p class="note">Open 7 days, 10:00 AM &ndash; 10:00 PM. Pick a day, then tap the time you want. It opens a text to (656) 204-8323. Your time is <b>not confirmed</b> until the $10 non-refundable deposit reaches Cash App <span class="tagline">$banzz86</span>.</p>
   <p class="note" id="svcBanner" style="color:#e8b647;font-weight:700"></p>
   <div class="days" id="days"></div>
   <div class="slots" id="slots"></div>
@@ -234,14 +237,14 @@ body.locked{overflow:hidden}
 <section class="alt book" id="book">
 <div class="wrap">
   <h2>Book Your Appointment<span class="bar"></span></h2>
-  <p>Text me to lock it in. Deposit confirms your slot.</p>
+  <p>Text me to request a time, then send the $10 deposit to Cash App <span class="tagline">$banzz86</span>. Deposit confirms the appointment.</p>
   <a class="cta blue" href="#schedule">See My Schedule &amp; Book</a>
   <div class="script">Let&rsquo;s Get Right.</div>
 </div>
 </section>
 
 <div class="pole"></div>
-<footer>BANZBLENDS &nbsp;&bull;&nbsp; RIVERVIEW, FL &nbsp;&bull;&nbsp; @BANZBLENDS &nbsp;&bull;&nbsp; TEXT (656) 204-8323</footer>
+<footer>BANZBLENDS &nbsp;&bull;&nbsp; RIVERVIEW, FL &nbsp;&bull;&nbsp; @BANZBLENDS &nbsp;&bull;&nbsp; TEXT (656) 204-8323 &nbsp;&bull;&nbsp; CASH APP $BANZZ86</footer>
 
 <script>
 (function(){
@@ -307,7 +310,7 @@ body.locked{overflow:hidden}
       if(taken){ a.innerHTML = label + '<span class="tag">Booked</span>'; }
       var msg = "BanzBlends booking request - " + longDate(d) + " at " + label +
                 (chosenService ? " for " + chosenService : "") +
-                ". Name: ____. Sending my $10 non-refundable deposit to lock it in.";
+                ". Name: ____. Sending the $10 non-refundable deposit to Cash App $banzz86 now.";
       a.href = "sms:"+PHONE+"?&body="+encodeURIComponent(msg);
       (function(aa, dd, ll){
         aa.addEventListener("click", function(){
