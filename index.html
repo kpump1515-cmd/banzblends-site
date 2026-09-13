@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BanzBlends | Riverview, FL Barber</title>
+<style>
+:root{
+  --red:#c1272d; --blue:#7d8794; --gold:#e8b647; --ink:#000000; --cream:#f2f2f2;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--cream);font-family:"Helvetica Neue",Arial,sans-serif;line-height:1.5}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+
+/* barber pole stripe bars */
+.pole{height:8px;background:repeating-linear-gradient(115deg,
+  #000 0 22px,var(--gold) 22px 34px,#000 34px 56px,#8d8d8d 56px 66px);
+  box-shadow:0 0 18px rgba(232,182,71,.25)}
+
+header{position:relative;text-align:center;padding:64px 20px 54px;overflow:hidden;
+  background:radial-gradient(ellipse at 50% 0%,#151515 0%,#0a0a0a 45%,#000 100%)}
+header:before,header:after{content:"";position:absolute;width:280px;height:280px;border-radius:50%;filter:blur(80px);opacity:.35}
+header:before{background:#3a3a3a;top:-90px;left:-70px}
+header:after{background:#5a4a1e;bottom:-110px;right:-70px}
+header>*{position:relative;z-index:1}
+.logo{font-size:clamp(40px,9vw,88px);letter-spacing:4px;font-weight:900;
+  background:linear-gradient(180deg,#fff 0%,var(--gold) 60%,#8a6512 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 0 40px rgba(245,196,69,.18)}
+.tag{margin-top:10px;font-size:12px;letter-spacing:5px;color:var(--gold);text-transform:uppercase}
+.loc{margin-top:8px;font-size:13px;letter-spacing:2px;color:#8d8d8d}
+.icons{margin:18px auto 0;display:flex;justify-content:center;align-items:flex-start;gap:0;
+  max-width:640px;padding:0;overflow:visible;background:transparent;box-shadow:none;position:relative}
+.icons:after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:55%;pointer-events:none;
+  background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.85) 65%,#000 100%)}
+.icons .item{width:34%;aspect-ratio:1/1;object-fit:cover;display:block;border:0;border-radius:0;
+  mix-blend-mode:screen;opacity:.92;
+  -webkit-mask-image:radial-gradient(ellipse 62% 62% at 50% 45%,#000 40%,rgba(0,0,0,.45) 70%,transparent 100%);
+  mask-image:radial-gradient(ellipse 62% 62% at 50% 45%,#000 40%,rgba(0,0,0,.45) 70%,transparent 100%)}
+.icons .item:nth-child(1){transform:translateY(0) translateX(14px)}
+.icons .item:nth-child(2){transform:translateY(26px)}
+.icons .item:nth-child(3){transform:translateY(52px) translateX(-14px)}
+.icons{padding-bottom:26px}
+@media(max-width:600px){.icons{max-width:100%;padding-bottom:14px}
+ .icons .item:nth-child(2){transform:translateY(14px)}
+ .icons .item:nth-child(3){transform:translateY(28px) translateX(-8px)}}
+.cta{display:inline-block;margin-top:22px;padding:16px 36px;border-radius:999px;
+  background:linear-gradient(135deg,var(--gold),#b8860b);color:#000;font-weight:800;
+  letter-spacing:1.5px;text-decoration:none;font-size:15px;text-transform:uppercase;
+  box-shadow:0 10px 26px rgba(232,182,71,.28)}
+.cta:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.cta.blue{background:transparent;color:var(--gold);border:1px solid var(--gold);box-shadow:none}
+.cta.gold{background:linear-gradient(135deg,#f5f5f5,#b9b9b9);color:#000;box-shadow:0 10px 26px rgba(255,255,255,.12)}
+
+section{padding:56px 0;scroll-margin-top:70px}
+.alt{background:linear-gradient(180deg,#0b0b0b,#000)}
+h2{font-size:13px;letter-spacing:5px;text-transform:uppercase;margin-bottom:26px;text-align:center;color:var(--gold)}
+h2 .bar{display:block;width:70px;height:3px;margin:12px auto 0;border-radius:3px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+
+.prices{max-width:640px;margin:0 auto}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:15px 18px;margin-bottom:10px;
+  background:#0c0c0c;border:1px solid #242424;border-left:4px solid var(--gold);border-radius:12px}
+.row:nth-child(even){border-left-color:#8d8d8d}
+.row:nth-child(3n){border-left-color:var(--red)}
+.row .name{letter-spacing:2px;font-weight:700;font-size:15px;display:flex;align-items:center;gap:12px}
+.row .name .thumb{width:44px;height:44px;flex:none;object-fit:cover;border-radius:10px;border:1px solid #2a2a2a}
+.row{text-decoration:none;color:inherit;cursor:pointer;transition:transform .12s,box-shadow .12s}
+.row:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(232,182,71,.12);background:#141414;border-color:var(--gold)}
+.row .go{font-size:11px;letter-spacing:2px;font-weight:800;color:#fdf6e9;background:linear-gradient(135deg,var(--gold),#b8860b);color:#000;padding:7px 12px;border-radius:999px;white-space:nowrap}
+.row .price{margin-left:auto;font-size:21px;font-weight:900;color:var(--gold)}
+
+.deposit{max-width:660px;margin:0 auto;border-radius:18px;padding:3px;
+  background:linear-gradient(135deg,#2a2a2a,var(--gold),#2a2a2a)}
+.deposit-in{background:#0a0a0a;border-radius:15px;padding:32px 26px;text-align:center}
+.deposit h3{font-size:28px;letter-spacing:2px;margin-bottom:14px;color:#fff}
+.deposit p{color:#b5b5b5;font-size:15px;margin-bottom:10px}
+.warn{color:var(--red);font-weight:900;letter-spacing:1px}
+
+.book{text-align:center}
+.book p{color:#b5b5b5;margin-bottom:6px}
+.script{font-style:italic;font-size:24px;color:var(--gold);letter-spacing:1px;margin-top:22px}
+footer{padding:34px 20px 54px;text-align:center;color:#6f6f6f;font-size:13px;letter-spacing:2px}
+
+.corner-pole{position:fixed;top:0;height:100vh;width:86px;z-index:5;pointer-events:none;
+  background-repeat:no-repeat;background-position:center top;background-size:contain;
+  filter:drop-shadow(0 0 22px rgba(0,0,0,.9))}
+.corner-pole.left{left:0}
+.corner-pole.right{right:0;transform:scaleX(-1)}
+@media(max-width:900px){.corner-pole{width:54px;opacity:.65}}
+@media(max-width:600px){.corner-pole{display:none}}
+
+.tabs{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;padding:16px 12px;background:#050505;border-bottom:1px solid #1a1a1a;
+  position:sticky;top:0;z-index:20}
+.tabs a{color:#cfcfcf;text-decoration:none;font-size:11px;letter-spacing:3px;text-transform:uppercase;
+  padding:9px 16px;border:1px solid #2a2a2a;border-radius:999px}
+.tabs a:hover{color:#000;background:var(--gold);border-color:var(--gold)}
+.hours{max-width:620px;margin:0 auto}
+.hrow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;margin-bottom:9px;
+  background:#0c0c0c;border:1px solid #242424;border-left:4px solid var(--gold);border-radius:12px;
+  letter-spacing:2px;font-size:14px}
+.hrow .open{color:var(--gold);font-weight:700}
+.hrow .closed{color:#8d8d8d;font-weight:600;letter-spacing:1px;font-size:13px}
+.hrow:last-child{border-left-color:#8d8d8d}
+.note{max-width:620px;margin:16px auto 22px;text-align:center;color:#8d8d8d;font-size:13px}
+
+.note{max-width:660px;margin:0 auto 20px;text-align:center;color:#8d8d8d;font-size:13px}
+.days{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 14px;justify-content:flex-start;scrollbar-width:thin}
+.day{flex:none;min-width:78px;text-align:center;padding:12px 10px;border-radius:14px;cursor:pointer;
+  background:#0c0c0c;border:1px solid #242424;color:#cfcfcf;transition:.15s}
+.day b{display:block;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#8d8d8d}
+.day i{display:block;font-style:normal;font-size:21px;font-weight:800;margin-top:4px}
+.day small{display:block;font-size:10px;letter-spacing:1px;color:#6f6f6f;margin-top:2px}
+.day:hover{border-color:var(--gold)}
+.day.active{background:linear-gradient(135deg,var(--gold),#b8860b);color:#000;border-color:var(--gold)}
+.day.active b,.day.active small{color:#000}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px;max-width:760px;margin:6px auto 0}
+.slot{display:block;text-align:center;padding:14px 8px;border-radius:12px;text-decoration:none;
+  background:#0c0c0c;border:1px solid #242424;border-bottom:3px solid var(--gold);
+  color:#f2f2f2;font-weight:700;letter-spacing:1px;font-size:14px;transition:.15s}
+.slot:hover{background:var(--gold);color:#000;transform:translateY(-2px)}
+.slot.booked{pointer-events:none;background:#070707;color:#5a5a5a;border:1px solid #1c1c1c;
+  border-bottom:3px solid #3a3a3a;text-decoration:line-through}
+.slot .tag{display:block;margin-top:4px;font-size:9px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--red);text-decoration:none;font-weight:800}
+.slot.gone{opacity:.3;pointer-events:none;text-decoration:line-through;border-bottom-color:#3a3a3a}
+.closed-msg{grid-column:1/-1;text-align:center;color:#8d8d8d;padding:18px}
+@media(max-width:600px){.days{justify-content:flex-start}}
+
+.modal{position:fixed;inset:0;z-index:60;display:none;background:rgba(0,0,0,.88);
+  backdrop-filter:blur(4px);overflow-y:auto;padding:24px 12px}
+.modal.open{display:block}
+.modal-box{position:relative;max-width:860px;margin:0 auto;background:#000;
+  border:1px solid #2a2a2a;border-radius:20px;box-shadow:0 24px 60px rgba(0,0,0,.8)}
+.modal-box section{padding:40px 0 44px}
+.modal-x{position:absolute;top:12px;right:14px;z-index:2;background:transparent;border:1px solid #2a2a2a;
+  color:#e8b647;width:38px;height:38px;border-radius:50%;font-size:22px;line-height:1;cursor:pointer}
+.modal-x:hover{background:#e8b647;color:#000}
+body.locked{overflow:hidden}
+
+.thanks-box{max-width:560px;margin-top:8vh}
+.thanks{padding:44px 28px 40px;text-align:center}
+.thanks .check{width:64px;height:64px;margin:0 auto 18px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),#b8860b);color:#000;font-size:32px;line-height:64px;font-weight:900}
+.thanks h3{font-size:24px;letter-spacing:1px;color:#fff;margin-bottom:14px}
+.thanks p{color:#b5b5b5;font-size:15px;margin-bottom:12px}
+.thanks .req{color:var(--gold);font-weight:800;letter-spacing:1px;font-size:17px}
+.thanks .fine{color:#8d8d8d;font-size:13px;margin-top:16px}
+</style>
+</head>
+<body>
+<div class="corner-pole left" style="background-image:url('img/pole.jpg')"></div>
+<div class="corner-pole right" style="background-image:url('img/pole.jpg')"></div>
+<div class="pole"></div>
+
+<header>
+  <div class="logo">BANZBLENDS</div>
+  <div class="tag">Precision. Confidence. Elevation.</div>
+  <div class="loc">Riverview, FL &nbsp;&bull;&nbsp; @banzblends</div>
+
+  <div class="icons">
+    <img class="item" src="img/clippers.jpg" alt="Professional clippers">
+    <img class="item" src="img/shears.jpg" alt="Barber shears">
+    <img class="item" src="img/razor.jpg" alt="Straight razor">
+  </div>
+
+  </header>
+
+<div class="pole"></div>
+<nav class="tabs">
+  <a href="#prices">Prices</a>
+  <a href="#deposit">Deposit</a>
+  <a href="#book">Book</a>
+</nav>
+
+
+<section class="alt" id="prices">
+<div class="wrap">
+  <h2>Price List<span class="bar"></span></h2>
+  <div class="prices">
+    <a class="row" href="#schedule" data-service="Mens Haircut"><span class="name"><img class="thumb" src="img/clippers.jpg" alt="">Mens Haircut</span><span class="price">$20</span><span class="go">Book &rarr;</span></a>
+<a class="row" href="#schedule" data-service="Haircut &amp; Beard"><span class="name"><img class="thumb" src="img/shears.jpg" alt="">Haircut &amp; Beard</span><span class="price">$30</span><span class="go">Book &rarr;</span></a>
+<a class="row" href="#schedule" data-service="Kids Cut"><span class="name"><img class="thumb" src="img/razor.jpg" alt="">Kids Cut</span><span class="price">$15</span><span class="go">Book &rarr;</span></a>
+<a class="row" href="#schedule" data-service="Bald Head"><span class="name"><img class="thumb" src="img/clippers.jpg" alt="">Bald Head</span><span class="price">$15</span><span class="go">Book &rarr;</span></a>
+<a class="row" href="#schedule" data-service="Eyebrows"><span class="name"><img class="thumb" src="img/shears.jpg" alt="">Eyebrows</span><span class="price">$6</span><span class="go">Book &rarr;</span></a>
+<a class="row" href="#schedule" data-service="Shapeup"><span class="name"><img class="thumb" src="img/razor.jpg" alt="">Shapeup</span><span class="price">$10</span><span class="go">Book &rarr;</span></a>
+<a class="row" href="#schedule" data-service="House Calls"><span class="name"><img class="thumb" src="img/clippers.jpg" alt="">House Calls</span><span class="price">$35</span><span class="go">Book &rarr;</span></a>
+</div>
+</div>
+</section>
+
+<div class="pole"></div>
+
+<section id="deposit">
+<div class="wrap">
+  <h2>Deposit Policy<span class="bar"></span></h2>
+  <div class="deposit"><div class="deposit-in">
+    <h3>$10 Non-Refundable Deposit</h3>
+    <p>Every appointment requires a <span class="warn">$10 NON-REFUNDABLE</span> deposit to be booked.</p>
+    <p>The deposit goes toward your service total. No-shows and same-day cancellations forfeit the deposit.</p>
+  </div></div>
+</div>
+</section>
+
+<div class="modal" id="thanksModal" aria-hidden="true"><div class="modal-box thanks-box">
+  <button class="modal-x" id="thanksClose" aria-label="Close">&times;</button>
+  <div class="thanks">
+    <div class="check">&#10003;</div>
+    <h3>Thank You &mdash; You&rsquo;re Almost Booked</h3>
+    <p class="req" id="thanksReq"></p>
+    <p>Your request was sent to BanzBlends by text. You&rsquo;ll get a confirmation back shortly.</p>
+    <p class="fine">Your chair is held once the <b>$10 non-refundable deposit</b> is received. No-shows and same-day cancellations forfeit the deposit.</p>
+    <a class="cta" href="sms:+16562048323?&body=Sending%20my%20%2410%20non-refundable%20deposit%20for%20my%20BanzBlends%20appointment.">Send My $10 Deposit</a>
+    <div class="script">Let&rsquo;s Get Right.</div>
+  </div>
+</div></div>
+
+<div class="modal" id="schedModal" aria-hidden="true"><div class="modal-box"><button class="modal-x" id="schedClose" aria-label="Close">&times;</button>
+<section id="schedule">
+<div class="wrap">
+  <h2>Schedule<span class="bar"></span></h2>
+  <p class="note">Open 7 days, 10:00 AM &ndash; 10:00 PM. Pick a day, then tap the time you want. It opens a text to (656) 204-8323. Your slot is held once the $10 non-refundable deposit is sent.</p>
+  <p class="note" id="svcBanner" style="color:#e8b647;font-weight:700"></p>
+  <div class="days" id="days"></div>
+  <div class="slots" id="slots"></div>
+  <p class="note" id="dayNote"></p>
+</div>
+</section>
+</div></div>
+
+<div class="pole"></div>
+
+<section class="alt book" id="book">
+<div class="wrap">
+  <h2>Book Your Appointment<span class="bar"></span></h2>
+  <p>Text me to lock it in. Deposit confirms your slot.</p>
+  <a class="cta blue" href="#schedule">See My Schedule &amp; Book</a>
+  <div class="script">Let&rsquo;s Get Right.</div>
+</div>
+</section>
+
+<div class="pole"></div>
+<footer>BANZBLENDS &nbsp;&bull;&nbsp; RIVERVIEW, FL &nbsp;&bull;&nbsp; @BANZBLENDS &nbsp;&bull;&nbsp; TEXT (656) 204-8323</footer>
+
+<script>
+(function(){
+  var PHONE = "+16562048323";
+  // open hours per weekday: [startHour, endHour] 24h, null = closed
+  var HOURS = {0:[10,22], 1:[10,22], 2:[10,22], 3:[10,22], 4:[10,22], 5:[10,22], 6:[10,22]};
+  var STEP = 45; // minutes per appointment
+  // BOOKED SLOTS — add "YYYY-MM-DD HH:MM" (24h) lines to block a time for everyone.
+  var BOOKED = [
+    // "2026-09-13 14:15",
+    "2026-09-13 13:45",
+  ];
+  function key(d,hh,mm){
+    return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2)+
+           " "+("0"+hh).slice(-2)+":"+("0"+mm).slice(-2);
+  }
+  var DOW = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  var MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var daysEl = document.getElementById("days");
+  var slotsEl = document.getElementById("slots");
+  var noteEl = document.getElementById("dayNote");
+  svcBanner = document.getElementById("svcBanner");
+  var chosenService = "";
+  var svcBanner = document.getElementById("svcBanner");
+  [].forEach.call(document.querySelectorAll('a.row[data-service]'), function(r){
+    r.addEventListener("click", function(){
+      chosenService = r.getAttribute("data-service") || "";
+      if(svcBanner){ svcBanner.textContent = chosenService ? ("Booking: " + chosenService + " \u2014 pick a day and time below.") : ""; }
+      var cur = document.querySelector(".day.active");
+      if(cur) cur.click();
+    });
+  });
+  var today = new Date(); today.setHours(0,0,0,0);
+  var dates = [];
+  for (var i=0;i<14;i++){ var d=new Date(today); d.setDate(today.getDate()+i); dates.push(d); }
+
+  function fmtTime(h,m){
+    var ap = h>=12 ? "PM":"AM"; var hh = h%12; if(hh===0) hh=12;
+    return hh+":"+(m<10?"0":"")+m+" "+ap;
+  }
+  function longDate(d){ return DOW[d.getDay()]+", "+MON[d.getMonth()]+" "+d.getDate(); }
+
+  function renderSlots(d, idx){
+    slotsEl.innerHTML="";
+    var h = HOURS[d.getDay()];
+    if(!h){
+      slotsEl.innerHTML = '<div class="closed-msg">Closed this day &mdash; house calls by request. Text me and I\'ll work you in.</div>';
+      noteEl.textContent="";
+      return;
+    }
+    var now = new Date();
+    var count = 0;
+    for(var mins = h[0]*60; mins + STEP <= h[1]*60; mins += STEP){
+      var hh = Math.floor(mins/60), mm = mins%60;
+      var slotDate = new Date(d); slotDate.setHours(hh, mm, 0, 0);
+      var label = fmtTime(hh,mm);
+      var past = slotDate.getTime() < now.getTime();
+      var taken = BOOKED.indexOf(key(d,hh,mm)) !== -1;
+      var a = document.createElement("a");
+      a.className = "slot" + (taken ? " booked" : (past ? " gone" : ""));
+      a.textContent = label;
+      if(taken){ a.innerHTML = label + '<span class="tag">Booked</span>'; }
+      var msg = "BanzBlends booking request - " + longDate(d) + " at " + label +
+                (chosenService ? " for " + chosenService : "") +
+                ". Name: ____. Sending my $10 non-refundable deposit to lock it in.";
+      a.href = "sms:"+PHONE+"?&body="+encodeURIComponent(msg);
+      (function(aa, dd, ll){
+        aa.addEventListener("click", function(){
+          window.__banzLastReq = longDate(dd) + " at " + ll + (chosenService ? " \u2014 " + chosenService : "");
+          if(window.__banzThanks) window.__banzThanks(window.__banzLastReq);
+        });
+      })(a, d, label);
+      slotsEl.appendChild(a);
+      if(!past && !taken) count++;
+    }
+    noteEl.textContent = count + " open time" + (count===1?"":"s") + " on " + longDate(d) + ". Tap one to request it.";
+  }
+
+  dates.forEach(function(d, i){
+    var el = document.createElement("div");
+    el.className = "day" + (i===0 ? " active" : "");
+    el.innerHTML = "<b>"+DOW[d.getDay()]+"</b><i>"+d.getDate()+"</i><small>"+MON[d.getMonth()]+"</small>";
+    el.onclick = function(){
+      [].forEach.call(daysEl.children,function(c){c.classList.remove("active");});
+      el.classList.add("active");
+      renderSlots(d, i);
+    };
+    daysEl.appendChild(el);
+  });
+  renderSlots(dates[0], 0);
+})();
+</script>
+
+<script>
+(function(){
+  var modal=document.getElementById("schedModal"), x=document.getElementById("schedClose");
+  function open(e){ if(e) e.preventDefault(); modal.classList.add("open"); document.body.classList.add("locked"); modal.scrollTop=0; }
+  function close(){ modal.classList.remove("open"); document.body.classList.remove("locked"); }
+  [].forEach.call(document.querySelectorAll('a[href="#schedule"]'), function(a){ a.addEventListener("click", open); });
+  x.addEventListener("click", close);
+  modal.addEventListener("click", function(e){ if(e.target===modal) close(); });
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape") close(); });
+})();
+</script>
+
+<script>
+(function(){
+  var m=document.getElementById("thanksModal"), x=document.getElementById("thanksClose"),
+      req=document.getElementById("thanksReq"), sched=document.getElementById("schedModal");
+  window.__banzThanks=function(text){
+    req.textContent = text || "";
+    if(sched){ sched.classList.remove("open"); }
+    setTimeout(function(){ m.classList.add("open"); document.body.classList.add("locked"); m.scrollTop=0; }, 400);
+  };
+  function close(){ m.classList.remove("open"); document.body.classList.remove("locked"); }
+  x.addEventListener("click", close);
+  m.addEventListener("click", function(e){ if(e.target===m) close(); });
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape") close(); });
+  // deposit buttons also trigger the thank-you note
+  [].forEach.call(document.querySelectorAll('a.cta[href^="sms:"]'), function(a){
+    if(a.closest("#thanksModal")) return;
+    a.addEventListener("click", function(){ window.__banzThanks(window.__banzLastReq || "Deposit message started"); });
+  });
+})();
+</script>
+</body>
+</html>
