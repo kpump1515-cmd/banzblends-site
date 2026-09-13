@@ -148,6 +148,19 @@ body.locked{overflow:hidden}
 .thanks .req{color:var(--gold);font-weight:800;letter-spacing:1px;font-size:17px}
 .thanks .fine{color:#8d8d8d;font-size:13px;margin-top:16px}
 .tagline{color:var(--gold);font-weight:800;letter-spacing:1px;white-space:nowrap}
+
+.form-box{max-width:520px;margin-top:6vh}
+.bform{padding:40px 26px 34px}
+.bform h3{font-size:23px;letter-spacing:1px;color:#fff;margin-bottom:8px;text-align:center}
+.bform .picked{text-align:center;color:var(--gold);font-weight:800;letter-spacing:1px;margin-bottom:14px}
+.bform .fine{color:#8d8d8d;font-size:12.5px;margin-bottom:16px;text-align:center}
+.bform label{display:block;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#b5b5b5;margin:14px 0 6px}
+.bform input,.bform select,.bform textarea{width:100%;padding:13px 14px;border-radius:11px;background:#0c0c0c;
+  border:1px solid #2a2a2a;color:#f2f2f2;font-size:16px;font-family:inherit}
+.bform input:focus,.bform select:focus,.bform textarea:focus{outline:none;border-color:var(--gold)}
+.bform input.bad,.bform select.bad{border-color:#c1272d}
+.bform .err{color:#ff6b6b;font-size:13px;min-height:18px;margin:12px 0 4px;text-align:center}
+.bform .cta{display:block;width:100%;text-align:center;margin:4px 0 14px;border:0;cursor:pointer;font-family:inherit;font-size:15px}
 </style>
 </head>
 <body>
@@ -216,6 +229,47 @@ body.locked{overflow:hidden}
     <a class="cta" href="https://cash.app/%24banzz86/10" target="_blank" rel="noopener">Pay $10 Deposit &mdash; Cash App $banzz86</a>
     <div class="fine" style="margin-top:14px">Cash App tag: <span class="tagline">$banzz86</span></div>
     <div class="script">Let&rsquo;s Get Right.</div>
+  </div>
+</div></div>
+
+<div class="modal" id="formModal" aria-hidden="true"><div class="modal-box form-box">
+  <button class="modal-x" id="formClose" aria-label="Close">&times;</button>
+  <div class="bform">
+    <h3>Booking Details</h3>
+    <p class="picked" id="pickedSlot"></p>
+    <p class="fine">Fill this out so your appointment can be confirmed. All fields marked * are required.</p>
+
+    <label for="fName">Full name *</label>
+    <input id="fName" type="text" autocomplete="name" placeholder="First and last name">
+
+    <label for="fPhone">Phone number *</label>
+    <input id="fPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(555) 555-5555">
+
+    <label for="fService">Service *</label>
+    <select id="fService">
+      <option value="">Choose a service</option>
+      <option>Mens Haircut - $20</option>
+      <option>Haircut &amp; Beard - $30</option>
+      <option>Kids Cut - $15</option>
+      <option>Bald Head - $15</option>
+      <option>Eyebrows - $6</option>
+      <option>Shapeup - $10</option>
+      <option>House Calls - $35</option>
+    </select>
+
+    <label for="fFirst">First time at BanzBlends? *</label>
+    <select id="fFirst">
+      <option value="">Choose one</option>
+      <option>Yes - first time</option>
+      <option>No - returning client</option>
+    </select>
+
+    <label for="fNotes">Anything I should know? (optional)</label>
+    <textarea id="fNotes" rows="2" placeholder="Style, length, kids, parking, etc."></textarea>
+
+    <p class="err" id="formErr"></p>
+    <button class="cta" id="formSend" type="button">Send Booking Request</button>
+    <p class="fine">This opens a text to BanzBlends with your details filled in. Your time is not confirmed until the $10 deposit reaches Cash App <span class="tagline">$banzz86</span>.</p>
   </div>
 </div></div>
 
@@ -308,14 +362,11 @@ body.locked{overflow:hidden}
       a.className = "slot" + (taken ? " booked" : (past ? " gone" : ""));
       a.textContent = label;
       if(taken){ a.innerHTML = label + '<span class="tag">Booked</span>'; }
-      var msg = "BanzBlends booking request - " + longDate(d) + " at " + label +
-                (chosenService ? " for " + chosenService : "") +
-                ". Name: ____. Sending the $10 non-refundable deposit to Cash App $banzz86 now.";
-      a.href = "sms:"+PHONE+"?&body="+encodeURIComponent(msg);
+      a.href = "#";
       (function(aa, dd, ll){
-        aa.addEventListener("click", function(){
-          window.__banzLastReq = longDate(dd) + " at " + ll + (chosenService ? " \u2014 " + chosenService : "");
-          if(window.__banzThanks) window.__banzThanks(window.__banzLastReq);
+        aa.addEventListener("click", function(ev){
+          ev.preventDefault();
+          if(window.__banzOpenForm) window.__banzOpenForm(longDate(dd), ll, chosenService);
         });
       })(a, d, label);
       slotsEl.appendChild(a);
@@ -368,6 +419,91 @@ body.locked{overflow:hidden}
   [].forEach.call(document.querySelectorAll('a.cta[href^="sms:"]'), function(a){
     if(a.closest("#thanksModal")) return;
     a.addEventListener("click", function(){ window.__banzThanks(window.__banzLastReq || "Deposit message started"); });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var PHONE = "+16562048323";
+  var fm = document.getElementById("formModal"),
+      fx = document.getElementById("formClose"),
+      picked = document.getElementById("pickedSlot"),
+      nameEl = document.getElementById("fName"),
+      phoneEl = document.getElementById("fPhone"),
+      svcEl = document.getElementById("fService"),
+      firstEl = document.getElementById("fFirst"),
+      notesEl = document.getElementById("fNotes"),
+      errEl = document.getElementById("formErr"),
+      sendEl = document.getElementById("formSend"),
+      sched = document.getElementById("schedModal");
+  var cur = {day:"", time:""};
+
+  function openForm(dayText, timeText, service){
+    cur.day = dayText; cur.time = timeText;
+    picked.textContent = dayText + " at " + timeText;
+    if(service){
+      for(var i=0;i<svcEl.options.length;i++){
+        if(svcEl.options[i].text.indexOf(service) === 0){ svcEl.selectedIndex = i; break; }
+      }
+    }
+    errEl.textContent = "";
+    if(sched) sched.classList.remove("open");
+    fm.classList.add("open"); document.body.classList.add("locked"); fm.scrollTop = 0;
+    setTimeout(function(){ nameEl.focus(); }, 250);
+  }
+  window.__banzOpenForm = openForm;
+
+  function closeForm(){ fm.classList.remove("open"); document.body.classList.remove("locked"); }
+  fx.addEventListener("click", closeForm);
+  fm.addEventListener("click", function(e){ if(e.target===fm) closeForm(); });
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape") closeForm(); });
+
+  // live phone formatting
+  phoneEl.addEventListener("input", function(){
+    var d = phoneEl.value.replace(/\D/g,"").slice(0,10);
+    var out = d;
+    if(d.length > 6) out = "(" + d.slice(0,3) + ") " + d.slice(3,6) + "-" + d.slice(6);
+    else if(d.length > 3) out = "(" + d.slice(0,3) + ") " + d.slice(3);
+    else if(d.length > 0) out = "(" + d;
+    phoneEl.value = out;
+  });
+
+  [nameEl, phoneEl, svcEl, firstEl].forEach(function(el){
+    el.addEventListener("input", function(){ el.classList.remove("bad"); errEl.textContent=""; });
+    el.addEventListener("change", function(){ el.classList.remove("bad"); errEl.textContent=""; });
+  });
+
+  sendEl.addEventListener("click", function(){
+    var nm = nameEl.value.trim();
+    var digits = phoneEl.value.replace(/\D/g,"");
+    var sv = svcEl.value;
+    var ft = firstEl.value;
+    var bad = null;
+
+    [nameEl, phoneEl, svcEl, firstEl].forEach(function(el){ el.classList.remove("bad"); });
+
+    if(nm.length < 2 || nm.indexOf(" ") === -1){ nameEl.classList.add("bad"); bad = bad || "Enter your first and last name."; }
+    if(digits.length \!== 10){ phoneEl.classList.add("bad"); bad = bad || "Enter a 10-digit phone number."; }
+    if(\!sv){ svcEl.classList.add("bad"); bad = bad || "Pick the service you want."; }
+    if(\!ft){ firstEl.classList.add("bad"); bad = bad || "Let me know if this is your first visit."; }
+
+    if(bad){ errEl.textContent = bad; return; }
+
+    var notes = notesEl.value.trim();
+    var msg = "BANZBLENDS BOOKING REQUEST"
+      + "\nName: " + nm
+      + "\nPhone: (" + digits.slice(0,3) + ") " + digits.slice(3,6) + "-" + digits.slice(6)
+      + "\nService: " + sv
+      + "\nWhen: " + cur.day + " at " + cur.time
+      + "\nFirst visit: " + ft
+      + (notes ? "\nNotes: " + notes : "")
+      + "\nSending the $10 non-refundable deposit to Cash App $banzz86 now.";
+
+    window.__banzLastReq = cur.day + " at " + cur.time + " \u2014 " + nm + " \u2014 " + sv;
+    closeForm();
+    window.location.href = "sms:" + PHONE + "?&body=" + encodeURIComponent(msg);
+    setTimeout(function(){ if(window.__banzThanks) window.__banzThanks(window.__banzLastReq); }, 600);
   });
 })();
 </script>
