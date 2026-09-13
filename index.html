@@ -161,6 +161,22 @@ body.locked{overflow:hidden}
 .bform input.bad,.bform select.bad{border-color:#c1272d}
 .bform .err{color:#ff6b6b;font-size:13px;min-height:18px;margin:12px 0 4px;text-align:center}
 .bform .cta{display:block;width:100%;text-align:center;margin:4px 0 14px;border:0;cursor:pointer;font-family:inherit;font-size:15px}
+
+.pay-box{max-width:500px;margin-top:7vh}
+.pay{padding:40px 26px 34px;text-align:center}
+.pay h3{font-size:24px;letter-spacing:1px;color:#fff;margin-bottom:8px}
+.pay .picked{color:var(--gold);font-weight:800;letter-spacing:1px;margin-bottom:22px}
+.step{display:flex;align-items:center;gap:14px;text-align:left;background:#0c0c0c;border:1px solid #242424;
+  border-radius:12px;padding:14px;margin-bottom:12px}
+.step.done{border-color:var(--gold)}
+.step .num{flex:none;width:34px;height:34px;border-radius:50%;background:#1a1a1a;color:var(--gold);
+  font-weight:900;line-height:34px;text-align:center}
+.step.done .num{background:linear-gradient(135deg,var(--gold),#b8860b);color:#000}
+.step.done .num:after{content:""}
+.step .stxt b{display:block;color:#f2f2f2;font-size:15px;letter-spacing:1px}
+.step .stxt span{display:block;color:#8d8d8d;font-size:12.5px;margin-top:2px}
+.pay .cta{display:block;width:100%;text-align:center;margin:0 0 18px;border:0;cursor:pointer;font-family:inherit;font-size:15px}
+.pay .fine{color:#8d8d8d;font-size:12.5px;margin-top:4px}
 </style>
 </head>
 <body>
@@ -229,6 +245,34 @@ body.locked{overflow:hidden}
     <a class="cta" href="https://cash.app/%24banzz86/10" target="_blank" rel="noopener">Pay $10 Deposit &mdash; Cash App $banzz86</a>
     <div class="fine" style="margin-top:14px">Cash App tag: <span class="tagline">$banzz86</span></div>
     <div class="script">Let&rsquo;s Get Right.</div>
+  </div>
+</div></div>
+
+<div class="modal" id="payModal" aria-hidden="true"><div class="modal-box pay-box">
+  <button class="modal-x" id="payClose" aria-label="Close">&times;</button>
+  <div class="pay">
+    <h3>Lock In Your Time</h3>
+    <p class="picked" id="paySlot"></p>
+
+    <div class="step" id="step1">
+      <div class="num">1</div>
+      <div class="stxt">
+        <b>Send the $10 deposit</b>
+        <span>Cash App to <span class="tagline">$banzz86</span>. Non-refundable, comes off your total.</span>
+      </div>
+    </div>
+    <a class="cta" id="payBtn" href="https://cash.app/%24banzz86/10" target="_blank" rel="noopener">Pay $10 Deposit Now</a>
+
+    <div class="step" id="step2">
+      <div class="num">2</div>
+      <div class="stxt">
+        <b>Send your booking details</b>
+        <span>Your name, number, service and time, ready to text.</span>
+      </div>
+    </div>
+    <button class="cta blue" id="textBtn" type="button">Send My Booking Text</button>
+
+    <p class="fine" id="payFine">Do both and your chair is confirmed. No deposit, no appointment.</p>
   </div>
 </div></div>
 
@@ -502,8 +546,48 @@ body.locked{overflow:hidden}
 
     window.__banzLastReq = cur.day + " at " + cur.time + " \u2014 " + nm + " \u2014 " + sv;
     closeForm();
-    window.location.href = "sms:" + PHONE + "?&body=" + encodeURIComponent(msg);
-    setTimeout(function(){ if(window.__banzThanks) window.__banzThanks(window.__banzLastReq); }, 600);
+    if(window.__banzOpenPay) window.__banzOpenPay(cur.day + " at " + cur.time, msg);
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var PHONE = "+16562048323";
+  var pm = document.getElementById("payModal"),
+      px = document.getElementById("payClose"),
+      slotEl = document.getElementById("paySlot"),
+      payBtn = document.getElementById("payBtn"),
+      textBtn = document.getElementById("textBtn"),
+      step1 = document.getElementById("step1"),
+      step2 = document.getElementById("step2"),
+      fine = document.getElementById("payFine");
+  var pendingMsg = "";
+
+  window.__banzOpenPay = function(slotText, msg){
+    pendingMsg = msg || "";
+    slotEl.textContent = slotText || "";
+    step1.classList.remove("done"); step2.classList.remove("done");
+    fine.textContent = "Do both and your chair is confirmed. No deposit, no appointment.";
+    pm.classList.add("open"); document.body.classList.add("locked"); pm.scrollTop = 0;
+  };
+  function closePay(){ pm.classList.remove("open"); document.body.classList.remove("locked"); }
+  px.addEventListener("click", closePay);
+  pm.addEventListener("click", function(e){ if(e.target===pm) closePay(); });
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape") closePay(); });
+
+  payBtn.addEventListener("click", function(){
+    step1.classList.add("done");
+    fine.textContent = "Deposit sent? Now send your booking text so I know who it belongs to.";
+  });
+
+  textBtn.addEventListener("click", function(){
+    step2.classList.add("done");
+    window.location.href = "sms:" + PHONE + "?&body=" + encodeURIComponent(pendingMsg);
+    setTimeout(function(){
+      closePay();
+      if(window.__banzThanks) window.__banzThanks(window.__banzLastReq || "");
+    }, 700);
   });
 })();
 </script>
