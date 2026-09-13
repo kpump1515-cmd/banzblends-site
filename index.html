@@ -528,9 +528,9 @@ body.locked{overflow:hidden}
     [nameEl, phoneEl, svcEl, firstEl].forEach(function(el){ el.classList.remove("bad"); });
 
     if(nm.length < 2 || nm.indexOf(" ") === -1){ nameEl.classList.add("bad"); bad = bad || "Enter your first and last name."; }
-    if(digits.length \!== 10){ phoneEl.classList.add("bad"); bad = bad || "Enter a 10-digit phone number."; }
-    if(\!sv){ svcEl.classList.add("bad"); bad = bad || "Pick the service you want."; }
-    if(\!ft){ firstEl.classList.add("bad"); bad = bad || "Let me know if this is your first visit."; }
+    if(digits.length !== 10){ phoneEl.classList.add("bad"); bad = bad || "Enter a 10-digit phone number."; }
+    if(!sv){ svcEl.classList.add("bad"); bad = bad || "Pick the service you want."; }
+    if(!ft){ firstEl.classList.add("bad"); bad = bad || "Let me know if this is your first visit."; }
 
     if(bad){ errEl.textContent = bad; return; }
 
