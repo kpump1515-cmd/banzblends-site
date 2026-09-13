@@ -188,6 +188,22 @@ body.locked{overflow:hidden}
 .gallery img{width:100%;display:block}
 .gback{text-align:center;padding:10px 0 60px}
 .gallery-empty{text-align:center;padding:30px 0 10px}
+
+body{background:#000 url('img/skyline.jpg') center top / cover no-repeat fixed}
+body:before{content:"";position:fixed;inset:0;z-index:-1;
+  background:linear-gradient(180deg,rgba(0,0,0,.30) 0%,rgba(0,0,0,.52) 45%,rgba(0,0,0,.66) 100%)}
+header,.gtop{background:transparent \!important}
+.alt{background:linear-gradient(180deg,rgba(8,8,8,.40),rgba(0,0,0,.55)) \!important}
+section{background:transparent}
+.row,.deposit-in,.slot,.step,.bform input,.bform select,.bform textarea{background:rgba(6,6,6,.62) \!important;backdrop-filter:blur(3px)}
+.modal-box{background:rgba(0,0,0,.94) \!important}
+.tabs{background:rgba(0,0,0,.62) \!important;backdrop-filter:blur(6px)}
+html{scrollbar-width:thin;scrollbar-color:#e8b647 #0a0a0a}
+::-webkit-scrollbar{width:12px;height:12px}
+::-webkit-scrollbar-track{background:#0a0a0a}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#f5c445,#b8860b);border-radius:999px;border:2px solid #0a0a0a}
+::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#ffd76a,#c9931a)}
+::-webkit-scrollbar-corner{background:#0a0a0a}
 </style>
 </head>
 <body>
